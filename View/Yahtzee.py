@@ -1,8 +1,9 @@
 import sys
 from PySide2 import QtWidgets
 from PySide2.QtCore import Slot
-from PySide2.QtWidgets import QApplication, QDialog, QLineEdit, QMainWindow, QPushButton
-from form import Form
+from PySide2.QtWidgets import QApplication, QDialog, QGridLayout, QLabel, QLineEdit, QMainWindow, QPushButton, QWidget
+from Model.player import Player
+from View.form import Form
 
 class Yahtzee(QMainWindow):
 
@@ -16,10 +17,20 @@ class Yahtzee(QMainWindow):
         super(Yahtzee, self).__init__(parent)
         self.setWindowTitle("Yahtzee")
 
-        #centralWidget = QtWidgets()
-        
+        p1 = Player("Jim", 6)
 
-        # Create a button, connect it and show it
+        # using layouts to make things look nice
+        # https://www.pythonguis.com/tutorials/pyside-layouts/
+        layout = QGridLayout()
+        
         button = QPushButton("Click me", self)
         button.clicked.connect(self.say_hello)
-        button.show()
+        layout.addWidget(button, 0, 0)
+
+        label = QLabel("howdy", self)
+        label.setText(str(p1))
+        layout.addWidget(label, 1, 0)
+
+        widget = QWidget()
+        widget.setLayout(layout)
+        self.setCentralWidget(widget)
